@@ -2,8 +2,36 @@
 
 namespace Omnipay\FirstAtlanticCommerce\Traits;
 
+use Omnipay\FirstAtlanticCommerce\Enums\TransactionCode;
+
 trait RecurringTrait
 {
+    
+    protected function getRecurringTransactionCode(): int
+    {
+        return $this->getTransactionCode() + ($this->getIsFreeTrial()? TransactionCode::INITIAL_RECURRING_FREE_TRIALS : ($this->getIsSubsequentRecurring() ? TransactionCode::SUBSEQUENT_RECURRING : TransactionCode::INITIAL_RECURRING))            
+    }
+    
+    public function setIsFreeTrial(boolean $value = false) 
+    {
+        $this->setParameter('IsFreeTrial', $value );
+    }
+    
+    public function getIsFreeTrial() 
+    {
+       return $this->setParameter('IsFreeTrial');
+    }
+    
+    public function setIsSubsequentRecurring(boolean $value = false) 
+    {
+        $this->setParameter('IsSubsequentRecurring', $value );
+    }
+    
+    public function getIsSubsequentRecurring() 
+    {
+       return $this->setParameter('IsSubsequentRecurring');
+    }
+    
     public function setExecutionDate($value)
     {
         return $this->setParameter('ExecutionDate', $value);
