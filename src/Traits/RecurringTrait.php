@@ -42,7 +42,7 @@ trait RecurringTrait
         return $this->getParameter('ExecutionDate');
     }
 
-    public function setIsRecurring(bool $value = false)
+    public function setIsRecurring(boolean $value = false)
     {
         return $this->setParameter('isRecurring', $value );
     }
