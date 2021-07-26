@@ -7,11 +7,13 @@ use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\FirstAtlanticCommerce\Message\Responses\HostedPageAuthorizationResponse;
 use Omnipay\FirstAtlanticCommerce\Traits\GeneratesSignature;
 use Omnipay\FirstAtlanticCommerce\Traits\ParameterTrait;
+use Omnipay\FirstAtlanticCommerce\Traits\RecurringTrait;
 use SimpleXMLElement;
 
 class HostedPagePreprocessRequest extends AbstractRequest
 {
     use ParameterTrait;
+    use RecurringTrait;
     use GeneratesSignature;
 
     protected string $requestName = 'HostedPagePreprocess';
@@ -58,6 +60,22 @@ class HostedPagePreprocessRequest extends AbstractRequest
             'SignatureMethod' => 'SHA1',
             'TransactionCode' => $this->getTransactionCode(),
         ];
+        
+        if( $this->getIsRecurring()) {
+            $this->validate(
+            'ExecutionDate',
+             'Frequency',
+                'NumberOfRecurrences');
+            
+            if( !($date = strtotime($this->getExecutionDate()) ) || ($date < time()) ) throw new InvalidRequestException(401, 'Invalid Execution Date');
+            
+            $transactionDetails = array_merge($transactionDetails, [
+                                        'ExecutionDate' => date('Ymd',$date),
+                                        'Frequency' => $this->getFrequency(),
+                                        'NumberOfRecurrences' => $this->getNumberOfRecurrences(),
+                                        'TransactionCode' => $this->getRecurringTransactionCode()
+                                    ]);
+        }
 
         return [
             'CardHolderResponseURL' => $this->getCardHolderResponseURL(),
