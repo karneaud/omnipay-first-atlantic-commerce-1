@@ -34,7 +34,7 @@ trait RecurringTrait
         return $this->getParameter('Frequency');
     }    
     
-    public function setNumberOfRecurrences(integer $value)
+    public function setNumberOfRecurrences(int $value)
     {
         return $this->setParameter('NumberOfRecurrences', $value);
     }
