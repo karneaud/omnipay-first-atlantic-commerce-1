@@ -67,20 +67,21 @@ class HostedPagePreprocessRequest extends AbstractRequest
              'Frequency',
                 'NumberOfRecurrences');
             
-            if( !($date = strtotime($this->getExecutionDate()) ) || ($date <= strtotime('yesterday')) ) throw new InvalidRequestException(401, 'Invalid Execution Date');
+            if( !($date = date('Ymd', strtotime($this->getExecutionDate())) ) || ($date <= date('Ymd') ) ) throw new InvalidRequestException(401, 'Invalid Execution Date');
             
-            $transactionDetails = array_merge($transactionDetails, [
-                                        'ExecutionDate' => date('Ymd',$date),
+            $reccuringDetails = array_merge($transactionDetails, [
+                                        'ExecutionDate' => $date,
                                         'Frequency' => $this->getFrequency(),
                                         'NumberOfRecurrences' => $this->getNumberOfRecurrences(),
-                                        'TransactionCode' => $this->getRecurringTransactionCode()
+                                        'TransactionCode' => $this->getRecurringTransactionCode(),
+                                        'IsRecurring' => true
                                     ]);
         }
 
-        return [
+        return array_merge(isset($recurringDetails)? ['RecurringDetails' => $recurringDetails ] : [], [
             'CardHolderResponseURL' => $this->getCardHolderResponseURL(),
-            'TransactionDetails' => $transactionDetails,
-        ];
+            'TransactionDetails' => $transactionDetails
+        ]);
     }
 
     public function getCardHolderResponseURL()
