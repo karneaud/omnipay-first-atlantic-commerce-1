@@ -12,37 +12,37 @@ trait RecurringTrait
         return $this->getTransactionCode() + ($this->getIsFreeTrial()? TransactionCode::INITIAL_RECURRING_FREE_TRIALS : ($this->getIsSubsequentRecurring() ? TransactionCode::SUBSEQUENT_RECURRING : TransactionCode::INITIAL_RECURRING))            
     }
     
-    public function setIsFreeTrial(boolean $value = false) 
+    public function setIsFreeTrial(bool $value = false) 
     {
-        $this->setParameter('IsFreeTrial', $value );
+        $this->setParameter('isFreeTrial', $value );
     }
     
     public function getIsFreeTrial() 
     {
-       return $this->setParameter('IsFreeTrial');
+       return $this->getParameter('isFreeTrial');
     }
     
-    public function setIsSubsequentRecurring(boolean $value = false) 
+    public function setIsSubsequentRecurring(bool $value = false) 
     {
-        $this->setParameter('IsSubsequentRecurring', $value );
+        $this->setParameter('isSubsequentRecurring', $value );
     }
     
     public function getIsSubsequentRecurring() 
     {
-       return $this->setParameter('IsSubsequentRecurring');
+       return $this->getParameter('isSubsequentRecurring');
     }
     
     public function setExecutionDate($value)
     {
-        return $this->setParameter('ExecutionDate', $value);
+        return $this->setParameter('executionDate', $value);
     }
 
     public function getExecutionDate()
     {
-        return $this->getParameter('ExecutionDate');
+        return $this->getParameter('executionDate');
     }
 
-    public function setIsRecurring(boolean $value = false)
+    public function setIsRecurring(bool $value = false)
     {
         return $this->setParameter('isRecurring', $value );
     }
@@ -54,21 +54,21 @@ trait RecurringTrait
 
     public function setFrequency($value = 'M')
     {
-        return $this->setParameter('Frequency', $value);
+        return $this->setParameter('frequency', $value);
     }
 
     public function getFrequency()
     {
-        return $this->getParameter('Frequency');
+        return $this->getParameter('frequency');
     }    
     
     public function setNumberOfRecurrences(int $value)
     {
-        return $this->setParameter('NumberOfRecurrences', $value);
+        return $this->setParameter('numberOfRecurrences', $value);
     }
 
     public function getNumberOfRecurrences()
     {
-        return $this->getParameter('NumberOfRecurrences');
+        return $this->getParameter('numberOfRecurrences');
     }
 }
