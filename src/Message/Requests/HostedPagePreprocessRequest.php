@@ -63,9 +63,9 @@ class HostedPagePreprocessRequest extends AbstractRequest
         
         if( $this->getIsRecurring()) {
             $this->validate(
-            'ExecutionDate',
-             'Frequency',
-                'NumberOfRecurrences');
+            'executionDate',
+             'frequency',
+                'numberOfRecurrences');
             
             if( !($date = date('Ymd', strtotime($this->getExecutionDate())) ) || ($date <= date('Ymd') ) ) throw new InvalidRequestException(401, 'Invalid Execution Date');
             
