@@ -69,7 +69,7 @@ class HostedPagePreprocessRequest extends AbstractRequest
             
             if( !($date = date('Ymd', strtotime($this->getExecutionDate())) ) || ($date <= date('Ymd') ) ) throw new InvalidRequestException(401, 'Invalid Execution Date');
             
-            $reccuringDetails = array_merge($transactionDetails, [
+            $recurringDetails = array_merge($transactionDetails, [
                                         'ExecutionDate' => $date,
                                         'Frequency' => $this->getFrequency(),
                                         'NumberOfRecurrences' => $this->getNumberOfRecurrences(),
